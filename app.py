@@ -1,4 +1,4 @@
-"""Wayki – tu amigo para los trámites de la Municipalidad de Huayucachi.
+"""Wayki – tu amigo para los trámites municipales (piloto: Huayucachi; también El Tambo).
 
 Ejecutar:  streamlit run app.py
 """
@@ -6,9 +6,9 @@ import os
 
 import streamlit as st
 
-from wayki.core import BuscadorTUPA, ficha_sin_ia, responder, transcribir
+from wayki.core import BuscadorTUPA, ficha_sin_ia, listar_municipios, responder, transcribir
 
-st.set_page_config(page_title="Wayki · Trámites Huayucachi", page_icon="🏛️", layout="centered")
+st.set_page_config(page_title="Wayki · Trámites municipales", page_icon="🏛️", layout="centered")
 
 
 def get_key() -> str:
@@ -19,27 +19,32 @@ def get_key() -> str:
 
 
 @st.cache_resource
-def cargar():
-    return BuscadorTUPA()
+def cargar(slug: str):
+    return BuscadorTUPA(slug)
 
 
-buscador = cargar()
+MUNIS = listar_municipios()
 API_KEY = get_key()
 
 st.title("🏛️ Wayki")
+slug = st.selectbox("Tu municipalidad", list(MUNIS), format_func=lambda s: MUNIS[s])
+buscador = cargar(slug)
+m = buscador.meta
 st.markdown(
-    "**Pregunta como le preguntarías a un vecino.** Wayki lee el TUPA oficial de la "
-    "Municipalidad Distrital de Huayucachi (404 páginas escaneadas) y te dice "
+    f"**Pregunta como le preguntarías a un vecino.** Wayki lee el TUPA oficial de la "
+    f"{m['nombre']} ({m['fuente']}) y te dice "
     "**qué llevar, cuánto cuesta, cuánto demora y a dónde ir**, citando la página."
 )
 
 with st.sidebar:
     st.subheader("Sobre los datos")
-    m = buscador.meta
+    st.write(f"**Municipalidad:** {m['nombre']}")
     st.write(f"**Fuente:** {m['fuente']}")
+    st.write(f"**Extracción:** {m.get('extraccion', '')}")
     st.write(f"**Norma:** {m['norma']}")
     st.write(f"**Procedimientos indexados:** {len(buscador.procs)}")
-    st.markdown(f"[PDF original]({m['url']})")
+    st.markdown(f"[PDF original]({m['url']}) · [Portal de Transparencia]({m['portal']})")
+    st.caption(f"Municipalidades disponibles: {', '.join(MUNIS.values())}")
     st.divider()
     st.write("🟢 IA activa (Groq)" if API_KEY else "🟡 Modo sin IA: ficha directa del TUPA")
     mostrar_debug = st.toggle("Ver fragmentos recuperados", value=False)
@@ -80,25 +85,23 @@ with tab_voz:
 
 pregunta = st.session_state.pregunta.strip()
 if pregunta:
-    resultados = buscador.buscar(pregunta, k=4)
+    resultados = buscador.buscar(pregunta, k=5)
     if not resultados:
         st.warning(
-            "No encontré ese trámite en el TUPA que tengo indexado. Por ahora conozco los "
-            f"{len(buscador.procs)} procedimientos del TUPA 2023 (licencias de funcionamiento, "
-            "defensa civil/ITSE, espectáculos y acceso a la información). "
-            "Para otros trámites, acércate a la Unidad de Trámite Documentario."
+            f"No encontré ese trámite en el TUPA de {m['corto']} ({len(buscador.procs)} procedimientos "
+            f"indexados de: {m['fuente']}). Acércate a mesa de partes de la municipalidad."
         )
         st.stop()
 
     if API_KEY:
         with st.spinner("Leyendo el TUPA por ti…"):
             try:
-                ans = responder(pregunta, resultados, API_KEY)
+                ans = responder(pregunta, resultados, API_KEY, m["nombre"])
             except Exception as e:
                 st.warning(f"La IA no respondió ({e}). Te muestro la ficha directa del TUPA.")
-                ans = ficha_sin_ia(resultados[0])
+                ans = ficha_sin_ia(resultados[0], m["nombre"])
     else:
-        ans = ficha_sin_ia(resultados[0])
+        ans = ficha_sin_ia(resultados[0], m["nombre"])
 
     if not ans.get("encontrado", True):
         st.warning(ans.get("resumen") or "No encontré ese trámite en el TUPA.")

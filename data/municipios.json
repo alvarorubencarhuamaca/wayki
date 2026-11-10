@@ -1,0 +1,28 @@
+{
+ "huayucachi": {
+  "nombre": "Municipalidad Distrital de Huayucachi",
+  "corto": "Huayucachi",
+  "fuente": "TUPA 2023 (PDF escaneado, 404 págs.)",
+  "norma": "Ordenanza Municipal N° 005-2022-CM/MDCHI (13/12/2022)",
+  "url": "https://drive.google.com/file/d/1oYUDl-Vtx1KLbppotWYfYg5IYguCytQE/view",
+  "portal": "https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=11095&id_tema=5",
+  "extraccion": "OCR Tesseract 5 (spa), 200 dpi",
+  "paginas_txt": "data/huayucachi_paginas",
+  "pag_ini": 9,
+  "pag_fin": 104,
+  "correcciones": {"38–41": {"plazo": "7 días hábiles", "costo": "S/ 971.10"}}
+ },
+ "el-tambo": {
+  "nombre": "Municipalidad Distrital de El Tambo",
+  "corto": "El Tambo",
+  "fuente": "TUPA 2021 (PDF digital, 418 págs.)",
+  "norma": "TUPA 2021 publicado en el Portal de Transparencia Estándar",
+  "url": "http://192.141.99.36:8081/documentos/PortalTranspariencia/PlaneamientoEstrategico/TUPA2021.pdf",
+  "portal": "https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=11090&id_tema=5",
+  "extraccion": "Texto digital (pdftotext), sin OCR",
+  "paginas_txt": "data/el-tambo_paginas",
+  "pag_ini": 1,
+  "pag_fin": 418,
+  "correcciones": {}
+ }
+}

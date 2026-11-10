@@ -1,7 +1,8 @@
 """Wayki: núcleo del asistente de trámites municipales.
 
-- Recuperación (la "R" de RAG): TF-IDF sobre los procedimientos del TUPA de Huayucachi,
-  extraídos por OCR del PDF escaneado oficial (ver pipeline/).
+- Recuperación (la "R" de RAG): TF-IDF sobre los procedimientos del TUPA de cada
+  municipalidad (data/municipios/<slug>.json), extraídos del PDF oficial (ver pipeline/).
+  Piloto: Huayucachi (PDF escaneado, OCR). Segunda: El Tambo (PDF digital).
 - Generación: un LLM (Llama 3.3 70B vía Groq) responde SOLO con el contexto recuperado
   y devuelve JSON estructurado (requisitos, costo, plazo, dónde ir, página del TUPA).
 - Voz: Whisper (whisper-large-v3-turbo vía Groq) convierte el audio del vecino en texto.
@@ -22,7 +23,17 @@ import requests
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-DATA = Path(__file__).resolve().parent.parent / "data" / "tupa_huayucachi.json"
+DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "municipios"
+
+
+def listar_municipios() -> dict[str, str]:
+    """slug -> nombre corto, de las municipalidades con TUPA procesado."""
+    out = {}
+    for f in sorted(DATA_DIR.glob("*.json")):
+        meta = json.loads(f.read_text(encoding="utf-8"))["meta"]
+        out[f.stem] = meta.get("corto", f.stem)
+    # el piloto primero
+    return dict(sorted(out.items(), key=lambda kv: kv[0] != "huayucachi"))
 GROQ_URL = "https://api.groq.com/openai/v1"
 # Si Groq retira un modelo, se prueba el siguiente (ver console.groq.com/docs/models)
 LLM_MODELS = [m for m in [os.getenv("WAYKI_LLM_MODEL"), "llama-3.3-70b-versatile",
@@ -38,14 +49,14 @@ SINONIMOS = {
     "local": "establecimiento",
     "abrir": "licencia funcionamiento",
     "defensa civil": "inspeccion tecnica seguridad edificaciones itse",
-    "casarme": "matrimonio",
-    "casar": "matrimonio",
-    "boda": "matrimonio",
-    "construir": "licencia edificacion",
+    "casarme": "matrimonio celebracion pliego matrimonial",
+    "casar": "matrimonio celebracion pliego matrimonial",
+    "boda": "matrimonio celebracion",
+    "construir": "licencia edificacion modalidad",
     "casa": "edificacion vivienda",
     "terreno": "predio posesion",
     "lote": "predio subdivision",
-    "partida": "copia certificada acta registro civil",
+    "partida": "expedicion partidas actas copia certificada",
     "nacimiento": "acta nacimiento registro civil",
     "informacion": "acceso informacion publica",
     "fiesta": "espectaculos publicos",
@@ -91,8 +102,8 @@ class Resultado:
 
 
 class BuscadorTUPA:
-    def __init__(self, path: Path = DATA):
-        data = json.loads(Path(path).read_text(encoding="utf-8"))
+    def __init__(self, slug: str = "huayucachi"):
+        data = json.loads((DATA_DIR / f"{slug}.json").read_text(encoding="utf-8"))
         self.meta = data["meta"]
         self.procs = data["procedimientos"]
         # el nombre pesa más que el resto del texto
@@ -100,7 +111,7 @@ class BuscadorTUPA:
         self.vec = TfidfVectorizer(ngram_range=(1, 2), sublinear_tf=True, min_df=1)
         self.M = self.vec.fit_transform(docs)
 
-    def buscar(self, pregunta: str, k: int = 4, umbral: float = 0.045) -> list[Resultado]:
+    def buscar(self, pregunta: str, k: int = 4, umbral: float = 0.055) -> list[Resultado]:
         """Top-k procedimientos. Si el mejor no supera el umbral, la pregunta está fuera del TUPA indexado."""
         sims = cosine_similarity(self.vec.transform([expandir(pregunta)]), self.M)[0]
         idx = sims.argsort()[::-1][:k]
@@ -109,7 +120,7 @@ class BuscadorTUPA:
         return [Resultado(self.procs[i], float(sims[i])) for i in idx if sims[i] > 0]
 
 
-SYSTEM = """Eres Wayki, asistente de trámites de la Municipalidad Distrital de Huayucachi (Huancayo, Junín, Perú).
+SYSTEM = """Eres Wayki, asistente de trámites de la {municipio} (Perú).
 Respondes a vecinos en español sencillo, cálido y breve (nada de jerga legal).
 REGLAS:
 - Usa SOLO la información de los fragmentos del TUPA que te doy. No inventes requisitos, montos ni plazos.
@@ -133,17 +144,18 @@ def _headers(api_key: str) -> dict:
     return {"Authorization": f"Bearer {api_key}"}
 
 
-def responder(pregunta: str, resultados: list[Resultado], api_key: str) -> dict:
+def responder(pregunta: str, resultados: list[Resultado], api_key: str,
+              municipio: str = "Municipalidad Distrital de Huayucachi") -> dict:
     contexto = "\n\n".join(
         f"### Fragmento {i+1} (páginas {r.proc['paginas']}, código {r.proc.get('codigo') or 's/c'})\n"
-        f"{r.proc['nombre']}\n{r.proc['texto'][:3500]}"
-        for i, r in enumerate(resultados[:3])
+        f"{r.proc['nombre']}\n{r.proc['texto'][:2500]}"
+        for i, r in enumerate(resultados[:5])
     )
     body = {
         "temperature": 0.1,
         "response_format": {"type": "json_object"},
         "messages": [
-            {"role": "system", "content": SYSTEM},
+            {"role": "system", "content": SYSTEM.replace("{municipio}", municipio)},
             {"role": "user", "content": f"Pregunta del vecino: {pregunta}\n\nFragmentos del TUPA:\n{contexto}"},
         ],
     }
@@ -167,14 +179,14 @@ def transcribir(audio_bytes: bytes, api_key: str, filename: str = "audio.wav") -
         headers=_headers(api_key),
         files={"file": (filename, audio_bytes)},
         data={"model": STT_MODEL, "language": "es", "response_format": "json",
-              "prompt": "Trámites municipales en Huayucachi, Huancayo: licencia, TUPA, ITSE, matrimonio."},
+              "prompt": "Trámites municipales en Huancayo: licencia, TUPA, ITSE, matrimonio, partida."},
         timeout=60,
     )
     r.raise_for_status()
     return r.json()["text"].strip()
 
 
-def ficha_sin_ia(res: Resultado) -> dict:
+def ficha_sin_ia(res: Resultado, municipio: str = "la municipalidad") -> dict:
     """Respuesta sin LLM: los campos que el parser sacó del TUPA."""
     p = res.proc
     return {
@@ -185,7 +197,7 @@ def ficha_sin_ia(res: Resultado) -> dict:
         "requisitos": p.get("requisitos") or [],
         "costo": p.get("costo") or "Ver TUPA",
         "plazo": p.get("plazo") or "Ver TUPA",
-        "donde": p.get("donde") or "Unidad de Trámite Documentario – Municipalidad Distrital de Huayucachi",
+        "donde": p.get("donde") or f"Mesa de partes – {municipio}",
         "consejo": "Lleva copia de tu DNI y pregunta en mesa de partes si hay formulario.",
         "pagina_tupa": p["paginas"],
     }

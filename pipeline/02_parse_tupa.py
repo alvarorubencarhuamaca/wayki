@@ -1,20 +1,24 @@
-"""Convierte el OCR del TUPA (un .txt por página) en data/tupa_huayucachi.json.
+"""Convierte el texto de un TUPA (un .txt por página) en data/municipios/<slug>.json.
 
-Uso:  python pipeline/02_parse_tupa.py <carpeta_txt> [ultima_pagina_fichas]
+Uso:  python pipeline/02_parse_tupa.py <slug>
+      (la configuración de cada municipalidad está en data/municipios.json)
 
-El TUPA 2023 de Huayucachi (Ordenanza N° 005-2022-CM/MDCHI) tiene:
-  - págs. 1–8: ordenanza
-  - págs. 9–104: fichas SUT de cada procedimiento (lo que le sirve al vecino)
-  - págs. 105–404: sustento de costos (no se indexa)
+Funciona con cualquier TUPA en formato SUT (fichas "Denominación del Procedimiento…"),
+venga de OCR (PDF escaneado) o de pdftotext (PDF digital). Agregar una municipalidad:
+  1. bash pipeline/01_ocr.sh tupa.pdf data/<slug>_paginas      (o pdftotext si es digital)
+  2. añadir su entrada en data/municipios.json
+  3. python pipeline/02_parse_tupa.py <slug>
 """
 import json
 import re
 import sys
 from pathlib import Path
 
-SRC = Path(sys.argv[1] if len(sys.argv) > 1 else "ocr/txt")
-ULTIMA = int(sys.argv[2]) if len(sys.argv) > 2 else 104
-OUT = Path(__file__).resolve().parent.parent / "data" / "tupa_huayucachi.json"
+ROOT = Path(__file__).resolve().parent.parent
+SLUG = sys.argv[1] if len(sys.argv) > 1 else "huayucachi"
+CFG = json.loads((ROOT / "data" / "municipios.json").read_text(encoding="utf-8"))[SLUG]
+SRC = ROOT / CFG["paginas_txt"]
+OUT = ROOT / "data" / "municipios" / f"{SLUG}.json"
 
 INICIO = re.compile(r"Denominaci[oó]n del (Procedimiento|Servicio)", re.I)
 # basura típica del OCR en los márgenes (sellos, numeración de folios)
@@ -31,7 +35,7 @@ def limpiar_linea(l: str) -> str:
 def paginas():
     for f in sorted(SRC.glob("*.txt")):
         n = int(f.stem[:3])
-        if 9 <= n <= ULTIMA:
+        if CFG["pag_ini"] <= n <= CFG["pag_fin"]:
             yield n, f.read_text(encoding="utf-8", errors="ignore")
 
 
@@ -73,10 +77,11 @@ def parse(b):
     requisitos = [re.sub(r"\s+", " ", r).strip() for r in re.split(r"\n?\s*\d{1,2}\s?[\.\-]{1,2}\s?-?\s*", req_txt) if len(r.strip()) > 8]
     monto = re.search(r"M[oa][nm]?a?to\s*-?\s*[S5]{1,2}/\s*\.?\s*([\d]+[.,]\d{2})", t)
     gratuito = re.search(r"Gratuito", t, re.I)
-    tras = t[t.find("Plazo de atenci"):] if "Plazo de atenci" in t else ""
-    plazo = re.search(r"(\d{1,3})\s*d[ií]as?\s*n?h[aá]biles", tras[:600], re.I)
+    mp = re.search(r"^[^\n]{0,8}Plazo(?: de atenci[oó]n)?\b(?! m[aá]ximo)", t, re.M)
+    tras = t[mp.start():] if mp else ""
+    plazo = re.search(r"(\d{1,3})\s*d[ií]as?\s*n?h[aá]bil(?:es)?", tras[:600], re.I)
     calif = re.search(r"(Aprobaci[oó]n autom[aá]tica|Evaluaci[oó]n previa\s*[-—–]\s*Silencio Administrativo (?:Positivo|Negativo))", t, re.I)
-    unidad = entre(t, r"Unidad de organizaci[oó]n donde se presenta la documentaci[oó]n", r"\n\|?\s*Unidad de organizaci[oó]n responsable")
+    unidad = entre(t, r"Unidad de organizaci[oó]n donde se presenta la documentaci[oó]n", r"\n[^\n]{0,8}Unidad de organizaci[oó]n responsable")
     responsable = entre(t, r"responsable de aprobar la solicitud[^\n]*\n", r"\n")
     horario = re.search(r"(Lunes a Viernes[^\n]+)", t)
 
@@ -100,26 +105,13 @@ def parse(b):
     }
 
 
-# Correcciones verificadas a mano contra la imagen del PDF (el OCR leyó mal estos campos)
-CORRECCIONES = {
-    "38–41": {"plazo": "7 días hábiles", "costo": "S/ 971.10"},
-}
-
-
 def main():
     procs = [parse(b) for b in bloques()]
     for p in procs:
-        p.update(CORRECCIONES.get(p["paginas"], {}))
-    data = {
-        "meta": {
-            "fuente": "TUPA de la Municipalidad Distrital de Huayucachi (PDF escaneado, 404 págs.)",
-            "norma": "Ordenanza Municipal N° 005-2022-CM/MDCHI (13/12/2022)",
-            "url": "https://drive.google.com/file/d/1oYUDl-Vtx1KLbppotWYfYg5IYguCytQE/view",
-            "portal": "https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=11095&id_tema=5",
-            "ocr": "Tesseract 5 (spa), 200 dpi – ver pipeline/01_ocr.sh",
-        },
-        "procedimientos": procs,
-    }
+        # correcciones verificadas a mano contra la imagen del PDF (el OCR leyó mal esos campos)
+        p.update(CFG.get("correcciones", {}).get(p["paginas"], {}))
+    meta = {k: v for k, v in CFG.items() if k not in ("correcciones", "paginas_txt", "pag_ini", "pag_fin")}
+    data = {"meta": {"slug": SLUG, **meta}, "procedimientos": procs}
     OUT.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"{len(procs)} procedimientos -> {OUT}")
     for p in procs:
