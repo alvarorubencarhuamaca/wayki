@@ -1,0 +1,32 @@
+e
+A 0 0
+: 0334
+a Je
+dl Texto Único de Procedimientos Administrativos - "MUNICIPALIDAD DISTRITAL DE HUAYUCACHI”
+E Plazo máximo de 15 días hábiles 30 días hábiles
+respuesta
+| f | Base legal
+| : Denominación Tipo Fecha
+o P Publicación
+e
+UN Literal x) del artículo 2,| Nuevo Reglamento de Inspecciones Técnicas de Seguridad en ¡Decreto Supremo N* 002-2018-PCM 05/01/2018
+Ed artículo 11, numeral 15,4 | Edificaciones
+o, del artículo 15 y artículo
+€ 29, 38
+A
+t E
+(
+(
+€
+4
+1
+ñ
+;
+(
+Ñ
+Q
+4
+AS
+£
+1
+í

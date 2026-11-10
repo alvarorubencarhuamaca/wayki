@@ -1,0 +1,66 @@
+E 000323
+uE ,
+$ Texto Único de Procedimientos Administrativos - "MUNICIPALIDAD DISTRITAL DE HUAYUCACHI”
+OS Denominación del Procedimiento Administrativo
+| á “LICENCIA DE FUNCIONAMIENTO PARA CESIONARIOS EN EDIFICACIONES CALIFICADAS CON NIVEL DE RIESGO MUY ALTO (Con TSE previa)"
+ES Código: PE10273BF60 Ñ
+E, | Descripción del procedimiento
+OS | Procedimiento a través del cual, un tercero, persona natural o jurldica, solicita la autorización para el desarrollo de actividades simultáneas y
+€ i adicionales en un establecimiento con nivel de riesgo muy alto que ya cuenta con licencia de funcionamiento. La municipalidad previa presentación
+PR ¡ dela solicitud determina el nivel de riesgo muy alto en función a la matriz de riesgo. Recibida la solicitud, la municipalidad verifica el cumplimiento de
+í los requisitos, realiza la Inspección Técnica de Seguridad en Edificaciones (ITSE) X emite el certificado 1TSE en un plazo máximo de siete (7) días
+E | hábiles. Posteriormente, emite la licencia de funcionamiento en un (1) día hábil. Ambos documentos se notifican en un solo acto. La ficencia de
+pos ¡funcionamiento tiene vigencia indeterminada y el certificado ¡TSE se renueva cada 2 años.
+y | Requisitos
+o 1.- Solicitud de Licencia de Funcionamiento, con carácter de Declaración Jurada, que Incluya: |
+a Tratándose de personas jurídicas u otros entes colectivos: su número de R.U.C, y el número de D.N.I. o Carné de Extranjería de su representante
+É legal.
+k b) Tratándose de personas naturales: su número de R.U.C y el número D.N.I, o Carné de Extranjería, y el número de D.N.l. o Carné de Extranjería
+” del representante en caso actúen mediante representación,
+Ñ 2.- En el caso de personas jurídicas u otros entes colectivos, Declaración Jurada del representante legal o apoderado señalando que su poder se
+f encuentra vigente, consignando el número de Partida Electrónica y asiento de inscripción en la Superintendencia Nacional de Registros Públicos
+K (SUNARP), Tratándose de representación de personas naturales, adjuntar carta poder simple firmada por el poderdante indicando de manera
+a obligatoria su número de documento de identidad, salvo que se trate de apoderados con poder inscrito en SUNARP, en cuyo caso basta una
+ha Declaración Jurada en los mismos términos establecidos para personas jurídicas.
+LE 3.- Croquis de ubicación.
+| , i  4,- Plano de arquitectura de la distribución existente y detalle del cálculo de aforo.
+Cd i
+_ 1 5.- Plano de distribución de tableros eléctricos, diagramas unifilares y cuadro de cargas.
+! 4 ! 6.- Certificado vigente de medición de resistencia del sistema de puesta a tierra.
+: ( : 7.- Plan de Seguridad del Establecimiento Objeto de Inspección.
+4 8.- Memoria o protocolos de pruebas de operatividad y/o mantenimiento de los equipos de seguridad y protección contra incendio,
+AS
+; 9.- Requisitos especiales: en los supuestos que a continuación se indican, son exigibles los siguientes requisitos:
+i É a) Declaración Jurada de contar con título profesional vigente y encontrarse hal ilitado por el colegio profesional correspondiente, en el caso de
+servicios relacionados con ta salud. .
+£ b) Declaración Jurada de contar con la autorización sectorial respectiva en el caso de aquellas actividades que conforme a Ley la requieran de
+4, Manera previa al otorgamiento de la licencia de funcionamiento.
+| e) Cuando se trate de un inmueble declarado Monumento integrante del Patrimonio Cultural de la Nación, presentar copia simple de la autorización
+É expedida por el Ministerio de Cultura, conforme a la Ley 28296, Ley General del Patrimonio Cultural de la Nación, excepto en los casos en que el
+s | Ministerio de Cultura haya participado en las etapas de remodelación y monitoreo de ejecución de obras previas inmediatas a la solicitud de la
+licencia del local. La exigencia de la autorización del Ministerio de Cultura para otorgar licencias de funcionamiento se aplica exclusivamente para los
+q inmuebles declarados Monumentos integrantes del Patrimonio Cultural de la Nación.
+¿ Notas:
+” 1.- No se requiere solicitar una modificación, ampliación o nueva licencia de funcionamiento, ni una licencia de funcionamiento para cesionarios, |
+k cuando el titular de una licencia de funcionamiento o un tercero cesionario, bajo responsabilidad de dicho titular, desarrolla alguna de las actividades |
+simultáneas y adicionales que establece el Ministerio de la Producción, si es que no se afectan las condiciones de seguridad del establecimiento.
+á 2.- No son exigibles el croquis de ubicación, plano de arquitectura de la distribución existente y detalle del cálculo de aforo, plano de distribución de
+” tableros eléctricos, diagramas unifilares y cuadro de cargas; en el caso de edificaciones que cuentan con conformidad de obra y no han sufrido
+á modificaciones, siempre que se trata de documentos presentados a la Municipalidad durante los cinco (5) años anteriores inmediatos,
+5 l Formularlos
+(
+o ! Formato de declaración jurada para licencia de funcionamiento. |
+R
+4 _
+, | Canales de atención
+a ¡Atención Presencial: Sede Central de la Entidad |
+o | Pago por derecho de tramitación | Modalidad de pagos
+¿ | ¡Caja de la Entidad
+3 Monto - S5/ 999.30 Í [Efectivo:
+q a — A it A - - 2%
+E | Plazo de atención | Calificación del procedimiento
+E 8 días hábiles | Evaluación previa — Silencio Administrativo Positivo: Si vencido el plazo de atención, no obtiene respuesta, la petición
+, | se considera aprobada.
+o MN o 0% A o a A
+a
+$

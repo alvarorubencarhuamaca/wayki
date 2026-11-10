@@ -1,0 +1,61 @@
+Dl 000335
+: ' Texto Único de Procedimientos Administrativos - "MUNICIPALIDAD DISTRITAL DE HUAYUCACH!"
+pos Denominación del Procedimiento Administrativo
+: í "Renovación del certificado de Inspección Técnica de Seguridad en Edificaciones para establecimientos objeto de inspección clasificados con
+: nivel de riesgo muy alto"
+EA Código: PE65785997E
+no | Descripción del procedimiento
+! ” Procedimiento mediante el cual una persona natural o jurídica, antes que finalice el periodo de vigencia del certificado de Inspección Técnica de
+A Seguridad en Edificaciones (ITSE), otorgado como parte del proceso de obtención de la licencia de funcionamiento o del Certificado de TSE, solicita
+¿ su renovación, siempre y cuando manifieste que mantiene las condiciones de seguridad que sustentaron el otorgamiento del Certificado de (TSE. La
+cd ¡municipalidad verifica el cumplimiento de los requisitos y otorga la resolución y el certificado de ITSE siempre que verifique a través de la diligencia
+pos de ITSE que el establecimiento objeto de inspección mantiene el cumplimiento de las condiciones de seguridad. El cerlificado de ITSE tiene una
+4 vigencia de dos (02) años.
+ok En caso el establecimiento objeto de inspección sea objeto de modificación, ampliación que afecte o varie las condiciones de seguridad iniciales, el
+o administrado debe solicitar una nueva [TSE para el nivel de riesgo correspondiente, según la Matriz de Riesgos
+f | Requisitos
+q l 4.- Solicitud de renovación del certificado de ITSE, indicando número y fecha de pago por el derecho de trámite y adjuntando la Declaración Jurada
+” para la Renovación del Certificado de ITSE
+o Notas:
+: 1.- Solicitud de renovación del certificado de ITSE contenido en el Anexo 1 de la Resolución Jefatural N* 16-2018-CENEPRED/J, Manual de
+" Ejecución de Inspección Técnica de Seguridad en Edificaciones, publicada el 23/01/2018,
+( | Formularios
+¿ AAA A: q —  - ---AA<á=--=- _ - A K2< XA a
+¿ A A A
+: | Canales de atención
+4
+á A A  __—_——
+4 : Ñ
+4 ¡ Atención Presencial: Sede Central de la Entidad |
+A A A nn 0 + + o _x_¿_z3-_ _____=__————_ + A
+Ñ | Pago por derecho de tramitación | Modalidad de pagos
+í ¿q _ÁA- AAA A Y QA
+: | ¡Caja de la Entidad |
+( ¡Monto -S/ 978.80 | ¡Efeotivo: |
+Ñ ! | ¡Soles |
+1 AAA y € _= 24 AA
+A
+ñ | Plazo de atención | Calificación del procedimiento
+y
+( | o > ¡ Ñ
+k | 9 días hábiles | Evaluación previa — Silencio Administrativo Positivo: Si vencido el plazo de atención, no obtiene respuesta, la petición ¿
+| se considera aprobada. |
+A AAA KA gqyqy(quqí_ II y ____— A—K242A y
+É | Sedes y horarios de atención
+, MUNICIPALIDAD DISTRITAL DE HUAYUCACHI Lunes a Viernes de 08:00 a 13:00 y de 14:00 a 17:00, Sábados de 08:00 a 12:00,
+FA | Unidad de organización donde se presenta la documentación
+¿ Y 7 7 OS A OS o => >
+o ¡UNIDAD DE TRAMITE DOCUMENTARIO : MUNICIPALIDAD DISTRITAL DE HUAYUCACHI |
+É | Unidad de organización responsable de aprobar la solicitud | Consulta sobre el procedimiento
+, ES - — A q _EIEXXXA.XX. a ES e o ;
+% OFICINA DE DEFENSA CIVIL | | Foléfono: 964563526 |
+¡ exo: = i
+A | | Correo: muni_huayucachiGholmail.com !
+s | Instancias de resolución de recursos
+, Reconsideración Apelación
+o Autoridad competente RESPONSABLE - OFICINA DE DEFENSA CIVIL SUB GERENTE - SUBGERENCIA DE OBRAS PUBLICAS Y
+ña DESARROLLO URBANO
+L Plazo máximo de 15 días hábiles 15 días hábiles
+ñ presentación
+1
+1
