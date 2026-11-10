@@ -1,21 +1,23 @@
-# Conversación 1
+# Conversación 1 — Ciudadano que realiza trámites municipales
 
-> ⚠️ Llenar con una conversación REAL (sin datos personales: usa iniciales o un rol).
+- **Perfil:** ciudadano de 38 años, trabajador independiente, residente de un distrito de la provincia de Huancayo
+- **Fecha:** lunes 9 de noviembre de 2026, ~5:00 p. m. (hora de Perú)
+- **Canal:** llamada telefónica, ~5 minutos; notas tomadas por escrito durante la llamada
+- **Datos personales:** no se registran nombres (solo rol)
 
-- **Fecha:** 
-- **Quién (rol, sin nombre):** p. ej. vecina con bodega en Huayucachi / servidor de mesa de partes / regidor
-- **Canal:** presencial / llamada / WhatsApp
-- **Duración:** 
+## Notas
 
-## Preguntas
-1. ¿Cuál fue el último trámite que hiciste (o atendiste) en la municipalidad?
-2. ¿Cuántas veces tuviste que ir? ¿Por qué regresaste?
-3. ¿Cómo averiguaste los requisitos y el costo? ¿Sabías que existe el TUPA?
-4. ¿Cuánto te costó en tiempo / pasajes / días sin trabajar?
-5. Si existiera un WhatsApp o web que te diga qué llevar, ¿lo usarías? ¿Pagarías algo / debería pagarlo la muni?
+**1. ¿Cuál fue el último trámite que realizaste en una municipalidad? ¿Cuántas veces tuviste que acudir?**
+Solicitó una licencia de funcionamiento para un pequeño negocio. Fue **tres veces**: la primera para preguntar qué documentos necesitaba; la segunda para presentar sus papeles, pero le indicaron que faltaba información; la tercera para completar lo pendiente. "Hubiera preferido conocer todo desde el principio."
 
-## Notas (lo que dijo, con sus palabras)
-- 
+**2. ¿Cómo averiguaste qué documentos necesitabas, cuánto costaba y cuánto demoraba?**
+Primero preguntó a un conocido que había hecho un trámite parecido. Luego fue directamente a la municipalidad porque **en internet no encontró información clara**. Le dieron orientaciones, pero no tenía un documento donde revisar con calma todos los requisitos y el costo.
 
-## Lo que aprendí
-- 
+**3. ¿Tuviste alguna dificultad durante el trámite?**
+Sí: **tuvo que dejar de trabajar para ir a consultar**; cada visita le quitaba tiempo. Además, no siempre sabía a qué oficina dirigirse.
+
+**4. ¿En qué situaciones te serviría consultar los requisitos por WhatsApp?**
+Para consultar antes de salir de casa, sobre todo si le indica requisitos, cuánto pagar y a qué oficina ir. Lo usaría **si tiene la seguridad de que es información oficial** de la municipalidad.
+
+## Hallazgo
+La dificultad principal no es el acceso a internet, sino encontrar información municipal **completa, comprensible y confiable** antes de iniciar un procedimiento. → Wayki debe citar la fuente oficial (página del TUPA) en cada respuesta.

@@ -1,21 +1,23 @@
-# Conversación 2
+# Conversación 2 — Trabajador de mesa de partes
 
-> ⚠️ Llenar con una conversación REAL (sin datos personales: usa iniciales o un rol).
+- **Perfil:** servidor municipal con cuatro años de experiencia en atención al ciudadano y recepción documental
+- **Fecha:** lunes 9 de noviembre de 2026, ~5:00 p. m. (hora de Perú)
+- **Canal:** llamada telefónica, ~5 minutos; notas tomadas por escrito durante la llamada
+- **Datos personales:** no se registran nombres (solo rol)
 
-- **Fecha:** 
-- **Quién (rol, sin nombre):** p. ej. vecina con bodega en Huayucachi / servidor de mesa de partes / regidor
-- **Canal:** presencial / llamada / WhatsApp
-- **Duración:** 
+## Notas
 
-## Preguntas
-1. ¿Cuál fue el último trámite que hiciste (o atendiste) en la municipalidad?
-2. ¿Cuántas veces tuviste que ir? ¿Por qué regresaste?
-3. ¿Cómo averiguaste los requisitos y el costo? ¿Sabías que existe el TUPA?
-4. ¿Cuánto te costó en tiempo / pasajes / días sin trabajar?
-5. Si existiera un WhatsApp o web que te diga qué llevar, ¿lo usarías? ¿Pagarías algo / debería pagarlo la muni?
+**1. ¿Cuáles son las consultas más frecuentes que reciben?**
+La mayoría pregunta qué requisitos necesita, cuánto debe pagar o en qué oficina se realiza un trámite. También preguntan por el estado de sus expedientes. "Hay consultas que se repiten todos los días."
 
-## Notas (lo que dijo, con sus palabras)
-- 
+**2. De cada diez consultas, ¿cuántas están relacionadas con requisitos, costos o procedimientos?**
+**Aproximadamente seis o siete**, según el día. Buena parte son ciudadanos que todavía no van a presentar documentos, solo vienen a pedir orientación.
 
-## Lo que aprendí
-- 
+**3. ¿Qué sucede cuando un ciudadano presenta documentación incompleta?**
+Según el procedimiento, se le informan las observaciones y cómo subsanarlas. Algunos se molestan porque sienten que no fueron bien orientados. Eso también genera más tiempo de atención.
+
+**4. ¿Qué actividades podrían mejorar con un asistente virtual de WhatsApp?**
+Ayudaría con las preguntas frecuentes: si el ciudadano ya conoce los requisitos, el personal podría dedicar más tiempo a recibir documentos y a los casos complejos. Pero **tendría que estar actualizado**: sería un problema que dé información distinta a la que maneja la municipalidad.
+
+## Hallazgo
+Las consultas informativas recurrentes (estimado del entrevistado: 6–7 de cada 10) son una carga operativa importante. La **actualización y consistencia** de las respuestas son condición para implementar la solución. → Wayki necesita un proceso de actualización del TUPA por municipalidad.

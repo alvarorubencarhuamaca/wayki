@@ -37,8 +37,13 @@
 
 **No es solo Huayucachi.** En el Portal de Transparencia, el enlace al TUPA de la vecina Municipalidad de **Chilca** dice "TUPA 2014" y apunta a la web genérica del PSCE, no a un documento. El de **El Tambo** está en un servidor con IP pública (`192.141.99.36:8081`). La información es obligatoria y pública, pero en la práctica no se puede usar.
 
-**Evidencia — 3 conversaciones con usuarios potenciales:** ver [`docs/research/`](docs/research/).
-> ⚠️ *Completar con las 3 conversaciones reales antes de la presentación.*
+**Evidencia — 3 conversaciones con usuarios potenciales** (llamadas del 9/11/2026, notas en [`docs/research/`](docs/research/)):
+
+| Quién | Lo que dijo | Qué implica para Wayki |
+|---|---|---|
+| [Ciudadano, 38 años, independiente](docs/research/conversacion_1.md) | Fue **3 veces** por una licencia de funcionamiento; en internet no encontró información clara; dejó de trabajar para consultar. | El dolor es real y cuesta tiempo e ingresos. Lo usaría **si la información es oficial** → citar la página del TUPA. |
+| [Mesa de partes, 4 años de experiencia](docs/research/conversacion_2.md) | **6–7 de cada 10 consultas** son sobre requisitos, costos u oficina; muchos vienen solo a pedir orientación. | Hay una carga operativa que Wayki puede absorber. Condición: **respuestas actualizadas** y consistentes con la muni. |
+| [Encargado de modernización](docs/research/conversacion_3.md) | Compraría si demuestra información correcta, menos consultas repetitivas, poca carga para el personal y **costo razonable**; pregunta quién actualiza la información. | Valida el modelo B2G. El servicio debe incluir la actualización del TUPA y métricas de uso. |
 
 ## 4. Solución e insight
 
