@@ -31,6 +31,32 @@ def limpiar_linea(l: str) -> str:
     l = re.sub(r"^(?:[A-Za-zÁÉÍÓÚÑáéíóú¡¿]{1,2}\s+){1,2}(?=[A-ZÁÉÍÓÚ\"“0-9])", "", l)  # 'E ', 'í ', 'Doa '
     return l.strip()
 
+CORTAS_OK = {"a", "y", "o", "e", "u", "de", "el", "la", "en", "un", "su", "al", "lo", "se", "no", "si", "es", "le", "por", "del", "los", "las", "con", "que", "m2", "s/", "n°", "dj"}
+
+
+def limpio(txt: str) -> str:
+    """Quita la basura típica del OCR (sellos, bordes de tabla) de un texto corrido."""
+    txt = re.sub(r"[|\[\]{}_—–~«»¡¿]+", " ", txt)
+    toks = []
+    for tok in txt.split():
+        base = tok.strip(".,;:()'\"“”-").lower()
+        if not base:
+            continue
+        # tokens de 1–2 caracteres que no son palabras ni números = ruido del OCR
+        if len(base) <= 2 and base not in CORTAS_OK and not base.isdigit() and not re.fullmatch(r"\d+[.)-]?", tok):
+            continue
+        if not re.search(r"[A-Za-zÁÉÍÓÚÑáéíóúñ0-9]", tok):
+            continue
+        toks.append(tok)
+    out = " ".join(toks)
+    # empieza en la primera palabra con mayúscula
+    m = re.search(r"[A-ZÁÉÍÓÚÑ](?:[a-záéíóúñ]{2,}|[A-ZÁÉÍÓÚÑ]{2,})", out)
+    out = out[m.start():] if m and m.start() < 40 else out
+    out = re.sub(r"\s+([.,;:])", r"\1", out)
+    out = re.sub(r"\bgue\b", "que", out).replace("Dectaración", "Declaración").replace(" tas ", " las ")
+    out = re.sub(r"^[A-ZÁÉÍÓÚÑ]{4,} [A-Z] (?=[A-Z][a-z])", "", out)
+    return out.strip(" ,;:-")
+
 
 def paginas():
     for f in sorted(SRC.glob("*.txt")):
@@ -74,7 +100,7 @@ def parse(b):
     codigo = re.search(r"C[oóa]digo:?\s*([A-Z]{2}[0-9A-Z]{8,10})", t)
     desc = entre(t, r"Descripci[oó]n del (?:procedimiento|servicio)", r"\n[^\n]{0,8}Requisitos\b")
     req_txt = entre(t, r"\n[^\n]{0,8}Requisitos\b", r"\n[^\n]{0,8}(?:Notas:|Formularios|Canales de atenci)")
-    requisitos = [re.sub(r"\s+", " ", r).strip() for r in re.split(r"\n?\s*\d{1,2}\s?[\.\-]{1,2}\s?-?\s*", req_txt) if len(r.strip()) > 8]
+    requisitos = [limpio(r) for r in re.split(r"\n?\s*\d{1,2}\s?[\.\-]{1,2}\s?-?\s*", req_txt) if len(r.strip()) > 8]
     monto = re.search(r"M[oa][nm]?a?to\s*-?\s*[S5]{1,2}/\s*\.?\s*([\d]+[.,]\d{2})", t)
     gratuito = re.search(r"Gratuito", t, re.I)
     mp = re.search(r"^[^\n]{0,8}Plazo(?: de atenci[oó]n)?\b(?! m[aá]ximo)", t, re.M)
@@ -86,20 +112,22 @@ def parse(b):
     horario = re.search(r"(Lunes a Viernes[^\n]+)", t)
 
     costo = f"S/ {monto.group(1).replace(',', '.')}" if monto else ("Gratuito" if gratuito else "")
-    donde = re.sub(r"\s+", " ", unidad.replace("|", " ")).strip(" :")
+    donde = limpio(unidad)
+    mu = re.search(r"(UNIDAD|[AÁ]REA|SUBGERENCIA|GERENCIA|OFICINA|MESA)", donde)
+    donde = donde[mu.start():] if mu else donde
     if horario:
         donde = f"{donde}. {horario.group(1).strip()}" if donde else horario.group(1).strip()
     return {
         "nombre": nombre or "Procedimiento sin nombre legible",
         "codigo": codigo.group(1) if codigo else "",
         "tipo": "Servicio" if "Denominación del Servicio" in t else "Procedimiento",
-        "descripcion": re.sub(r"\s+", " ", desc),
+        "descripcion": limpio(desc),
         "requisitos": requisitos[:12],
         "costo": costo,
         "plazo": f"{plazo.group(1)} días hábiles" if plazo else ("Inmediato (aprobación automática)" if calif and "autom" in calif.group(1).lower() else ""),
         "calificacion": calif.group(1) if calif else "",
         "donde": donde,
-        "responsable": re.sub(r"\s+", " ", responsable.replace("|", " ")).strip(),
+        "responsable": limpio(responsable),
         "paginas": f"{b['pags'][0]}–{b['pags'][-1]}" if len(b["pags"]) > 1 else str(b["pags"][0]),
         "texto": t,
     }
