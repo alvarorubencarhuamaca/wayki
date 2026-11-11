@@ -23,6 +23,7 @@
 |---|---|
 | **Demo** | **[https://qthbrgdhnhjyhp7pywtvgz.streamlit.app/](https://qthbrgdhnhjyhp7pywtvgz.streamlit.app/)** (o `streamlit run app.py`) |
 | **Datos** | TUPA oficiales de 8 municipalidades, enlazados desde el Portal de Transparencia (fuente, norma y enlace de cada una en [`data/municipios.json`](data/municipios.json)) |
+| **Video de respaldo** | [Ver en Google Drive](https://drive.google.com/drive/folders/1-sSu0o8SqjjahOyrqxZ_tpiYjZ2aNBpm) (1:30, software real funcionando) |
 | **Herramientas del curso** | LLM + RAG + structured outputs (sesión 08) · Whisper (sesión 13) · *bonus:* Document AI / OCR (sesión 10) |
 
 ---
@@ -92,6 +93,8 @@ Solo **4 de 28** tienen un TUPA vigente, accesible y en texto digital. En Viques
 ## 6. Demo
 
 **URL:** [https://qthbrgdhnhjyhp7pywtvgz.streamlit.app/](https://qthbrgdhnhjyhp7pywtvgz.streamlit.app/)
+
+**Video de respaldo (1:30):** [Google Drive](https://drive.google.com/drive/folders/1-sSu0o8SqjjahOyrqxZ_tpiYjZ2aNBpm): recorrido real de la app (bodega en Huayucachi, escuchar, WhatsApp, cómo llegar y pregunta por voz).
 
 **Correr en local:**
 ```bash
