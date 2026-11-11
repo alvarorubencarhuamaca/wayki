@@ -35,7 +35,17 @@
 
 **Cómo se resuelve hoy:** preguntando en ventanilla, por teléfono (964 563 526, según el TUPA) o a un tramitador.
 
-**No es solo Huayucachi.** En el Portal de Transparencia, el enlace al TUPA de la vecina Municipalidad de **Chilca** dice "TUPA 2014" y apunta a la web genérica del PSCE, no a un documento. El de **El Tambo** está en un servidor con IP pública (`192.141.99.36:8081`). La información es obligatoria y pública, pero en la práctica no se puede usar.
+**No es solo Huayucachi: auditoría de las 28 municipalidades de la provincia de Huancayo** ([informe](docs/auditoria_tupa_huancayo.md) · [datos](docs/auditoria_tupa_huancayo.csv), 10/11/2026):
+
+| Situación en el Portal de Transparencia | Municipalidades |
+|---|---:|
+| ❌ No publica su TUPA | **15 de 28** (54 %) |
+| ❌ Enlace roto o inútil | 2 |
+| ⚠️ TUPA de 2011 | 1 |
+| ⚠️ Accesible con dificultad | 2 |
+| ✅ Accesible | 8 |
+
+Solo **4 de 28** tienen un TUPA vigente, accesible y en texto digital. En Viques, el enlace oficial apunta a un archivo en la computadora de un trabajador (`file:///C:/Users/…`); en Chilca, dice "TUPA 2014" y lleva a la página de inicio de otra entidad.
 
 **Evidencia — 3 conversaciones con usuarios potenciales** (llamadas del 9/11/2026, notas en [`docs/research/`](docs/research/)):
 
@@ -126,7 +136,7 @@ flowchart LR
 - **Quién paga:** la **municipalidad** (B2G). El vecino usa Wayki gratis. Argumento de compra: menos colas y consultas repetidas en mesa de partes, mejor cumplimiento de transparencia, y un canal más para el vecino.
 - **Precio:** **S/ 290 al mes por municipalidad distrital** (incluye digitalizar su TUPA y actualizarlo cuando cambie). Implementación inicial: S/ 900 una vez.
 - **Huayucachi:** piloto **gratuito** (para validar y evitar cualquier conflicto de interés). Los clientes que pagan son otras municipalidades.
-- **Escalabilidad:** todas las municipalidades están obligadas a tener TUPA, y los procedimientos estandarizados (licencia de funcionamiento, ITSE, acceso a la información) son iguales en todas. Agregar El Tambo no requirió cambiar código. Primer mercado: los 28 distritos de la provincia de Huancayo; luego Junín; luego el país (~1,890 municipalidades).
+- **Escalabilidad:** todas las municipalidades están obligadas a tener TUPA, y los procedimientos estandarizados (licencia de funcionamiento, ITSE, acceso a la información) son iguales en todas. Agregar El Tambo no requirió cambiar código. Primer mercado: las 28 municipalidades de la provincia de Huancayo, donde 15 ni siquiera publican su TUPA (ver auditoría); luego Junín; luego el país (~1,890 municipalidades).
 - **Costo por usuario** (estimado con precios publicados en [groq.com/pricing](https://groq.com/pricing), verificar):
   - Consulta de texto ≈ 3,000 tokens de entrada + 400 de salida → ≈ **US$ 0.002** (≈ S/ 0.008).
   - Consulta por voz: + ~15 s de Whisper turbo → ≈ US$ 0.0002 adicional.

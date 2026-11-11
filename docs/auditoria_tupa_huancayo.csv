@@ -1,0 +1,29 @@
+municipalidad,id_entidad_pte,categoria,tupa_en_pte,anio_o_norma,destino_del_enlace,formato_pdf,observacion
+Municipalidad Provincial de Huancayo,1190,Accesible,Sí,"TUPA 2025, OM N° 790-MPH/CM",gob.pe,Texto digital (605 págs.),Publica TUPA y modificaciones 2025
+Carhuacallanga,11082,Sin TUPA en el PTE,No,—,—,—,Sección Planeamiento sin enlaces
+Chicche,11083,Sin TUPA en el PTE,No,—,—,—,Sección Planeamiento sin enlaces
+Chacapampa,11084,Sin TUPA en el PTE,No,—,—,—,Sección Planeamiento sin enlaces
+Chilca,11085,Enlace roto o inútil,Sí,TUPA 2014 (según el enlace),Página de inicio de otra entidad (psce.gob.pe),—,El enlace no lleva a ningún documento
+Chongos Alto,11086,Sin TUPA en el PTE,No,—,—,—,Sección Planeamiento sin enlaces
+Chupuro,11087,Sin TUPA en el PTE,No,—,—,—,Sección Planeamiento sin enlaces
+Colca,11088,Sin TUPA en el PTE,No,—,—,—,
+Cullhuas,11089,Sin TUPA en el PTE,No,—,—,—,
+El Tambo,11090,Accesible,Sí,TUPA 2021,Servidor propio por IP (192.141.99.36:8081),Texto digital (418 págs.),Integrado en Wayki
+Huacrapuquio,11091,Sin TUPA en el PTE,No,—,—,—,
+Hualhuas,11092,Accesible con dificultad,Sí,"OM N° 020-2023-MDH/CM, ratificado 2024",gob.pe → PDF de 1 página → Google Drive,—,El PDF publicado es solo una portada con un enlace a Drive (no verificado)
+Huancán,11093,Accesible,Sí,"Decreto de Alcaldía N° 002-2023-MDH/A",gob.pe,Escaneado (272 págs. de imágenes),
+Huasicancha,11094,Sin TUPA en el PTE,No,—,—,—,
+Huayucachi,11095,Accesible con dificultad,Sí,"OM N° 005-2022-CM/MDCHI (TUPA 2023)",Enlace principal roto (gob.pe 403); el TUPA está en un Google Drive enlazado como 'Modificación…',Escaneado (404 págs.),Integrado en Wayki (piloto)
+Ingenio,11096,Sin TUPA en el PTE,No,—,—,—,Sección Planeamiento sin enlaces
+Pariahuanca,11097,Sin TUPA en el PTE,No,—,—,—,Sección Planeamiento sin enlaces
+Pilcomayo,11098,Accesible,Sí,Publicado en gob.pe (2023),gob.pe,Escaneado (124 págs. de imágenes),
+Pucará,11099,Sin TUPA en el PTE,No,—,—,—,Publica ROF/PEI/POI pero no TUPA
+Quichuay,11100,Sin TUPA en el PTE,No,—,—,—,Sección Planeamiento sin enlaces
+Quilcas,11101,Sin TUPA en el PTE,No,—,—,—,Sección Planeamiento sin enlaces
+San Agustín de Cajas,11102,Accesible,Sí,Publicado en web municipal (14/02/2022),Web municipal,Texto digital (402 págs.),
+San Jerónimo de Tunán,11103,Accesible,Sí,Publicado en gob.pe (2023),gob.pe,Mayormente imágenes (275 págs.),
+Saño,11104,Accesible,Sí,"OM N° 023-2019-CM/MDS, modificado",gob.pe,Texto digital (452 págs.),
+Sapallanga,11105,Accesible,Sí,"OM N° 014-2024-CM/MDS, ratificada dic-2025",gob.pe,No determinado,
+Sicaya,11106,Desactualizado,Sí,TUPA 2011,Portal antiguo peru.gob.pe,No determinado,Documento de hace 15 años
+Santo Domingo de Acobamba,11107,Sin TUPA en el PTE,No,—,—,—,Sección Planeamiento sin enlaces
+Viques,11108,Enlace roto o inútil,Sí,TUPA 2021 (según el nombre del archivo),Ruta a un archivo en la PC de un trabajador (file:///C:/Users/…/Downloads/),—,Nadie fuera de esa computadora puede abrirlo
