@@ -13,9 +13,10 @@ st.set_page_config(page_title="Wayki · Trámites municipales", page_icon="🏛�
 
 def get_key() -> str:
     try:
-        return st.secrets.get("GROQ_API_KEY", "") or os.getenv("GROQ_API_KEY", "")
+        key = st.secrets.get("GROQ_API_KEY", "") or os.getenv("GROQ_API_KEY", "")
     except Exception:  # sin secrets.toml
-        return os.getenv("GROQ_API_KEY", "")
+        key = os.getenv("GROQ_API_KEY", "")
+    return key if key.startswith("gsk_") else ""  # ignora el texto de ejemplo
 
 
 @st.cache_resource
