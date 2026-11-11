@@ -1,12 +1,17 @@
 """Wayki – el TUPA de tu municipalidad, explicado como un vecino.
 
-Piloto: Huayucachi (PDF escaneado, OCR). También: El Tambo (PDF digital).
+Prueba piloto: 8 municipalidades de la provincia de Huancayo (ver data/municipios.json).
 Ejecutar:  streamlit run app.py
 """
+import csv
+import datetime as dt
 import html
 import os
+import urllib.parse
+from pathlib import Path
 
 import streamlit as st
+import streamlit.components.v1 as components
 
 from wayki.core import BuscadorTUPA, ficha_sin_ia, listar_municipios, responder, transcribir
 
@@ -28,6 +33,15 @@ html, body, [class*="css"], .stMarkdown, .stButton button, input, textarea {font
 .hero h1{color:#fff;font-size:30px;line-height:1.15;font-weight:800;margin:6px 0 8px;padding:0}
 .hero p{font-size:16px;opacity:.95;margin:0}
 .hero .stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.hero{position:relative;overflow:hidden;padding-bottom:40px}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:18px;opacity:.55;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='18' viewBox='0 0 36 18'%3E%3Cpath d='M0 18 L9 9 L18 18 Z' fill='%23F3ECE3'/%3E%3Cpath d='M18 18 L27 9 L36 18 Z' fill='%23E8A33D'/%3E%3Cpath d='M9 9 L18 0 L27 9 L18 18 Z' fill='none' stroke='%23F3ECE3' stroke-width='2'/%3E%3Crect x='16' y='7' width='4' height='4' fill='%23E8A33D'/%3E%3C/svg%3E");
+  background-repeat:repeat-x;background-size:36px 18px}
+.acciones{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 4px}
+.acciones a{flex:1 1 150px;text-align:center;text-decoration:none !important;border-radius:14px;padding:12px 10px;
+  font-weight:700;font-size:15px;border:1px solid #E6DCCF;background:#fff;color:var(--carbon) !important}
+.acciones a.wa{background:#1FAF5A;border-color:#1FAF5A;color:#fff !important}
+.acciones a:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
 .hero .stat{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:999px;
             padding:6px 12px;font-size:13px;font-weight:600}
 
@@ -69,6 +83,54 @@ html, body, [class*="css"], .stMarkdown, .stButton button, input, textarea {font
 """, unsafe_allow_html=True)
 
 e = html.escape  # todo texto del TUPA o del LLM pasa por aquí antes de ir al HTML
+APP_URL = "https://qthbrgdhnhjyhp7pywtvgz.streamlit.app/"
+FEEDBACK = Path(__file__).parent / "feedback_log.csv"  # efímero en Streamlit Cloud (se borra al reiniciar)
+
+_c1, _c2 = st.columns([3, 1])
+if _c2.toggle("🔠 Letra grande", key="letra_grande"):
+    st.markdown("<style>.block-container{zoom:1.18}</style>", unsafe_allow_html=True)
+
+
+def boton_escuchar(texto: str):
+    """Lee la respuesta en voz alta con la voz del navegador (Web Speech API, gratis)."""
+    t = texto.replace("\\", " ").replace("`", " ").replace("$", "S/ ").replace("\n", " ").replace("</", " ")
+    components.html(f"""
+    <button id="b" style="width:100%;padding:12px;border-radius:14px;border:1px solid #E6DCCF;background:#fff;
+      font:700 15px Inter,system-ui,sans-serif;color:#2B2B2B;cursor:pointer">🔊 Escuchar respuesta</button>
+    <script>
+      const txt = `{t}`; const b = document.getElementById('b'); let hablando = false;
+      b.onclick = () => {{
+        const s = window.speechSynthesis;
+        if (hablando) {{ s.cancel(); hablando = false; b.textContent = '🔊 Escuchar respuesta'; return; }}
+        const u = new SpeechSynthesisUtterance(txt); u.lang = 'es-PE'; u.rate = 0.95;
+        const v = s.getVoices().find(x => x.lang.startsWith('es')); if (v) u.voice = v;
+        u.onend = () => {{ hablando = false; b.textContent = '🔊 Escuchar respuesta'; }};
+        s.cancel(); s.speak(u); hablando = true; b.textContent = '⏹️ Detener';
+      }};
+    </script>""", height=56)
+
+
+def guardar_feedback(slug: str, pregunta: str, procedimiento: str, util: bool):
+    try:
+        nuevo = not FEEDBACK.exists()
+        with FEEDBACK.open("a", newline="", encoding="utf-8") as f:
+            w = csv.writer(f)
+            if nuevo:
+                w.writerow(["fecha", "municipalidad", "pregunta", "procedimiento", "util"])
+            w.writerow([dt.datetime.now().isoformat(timespec="seconds"), slug, pregunta, procedimiento, int(util)])
+    except OSError:
+        pass
+
+
+def resumen_feedback(slug: str):
+    try:
+        with FEEDBACK.open(encoding="utf-8") as f:
+            filas = [r for r in csv.DictReader(f) if r["municipalidad"] == slug]
+    except OSError:
+        return None
+    if not filas:
+        return None
+    return len(filas), sum(int(r["util"]) for r in filas)
 
 
 # ---------------------------------------------------------------- datos y claves
@@ -207,6 +269,33 @@ if pregunta:
                 págs. {e(str(ans.get('pagina_tupa', '')))}{codigo} ·
                 <a href="{e(m['url'])}" target="_blank">ver PDF</a></span></div>""", unsafe_allow_html=True)
 
+            # ---- acciones para el vecino: escuchar, compartir, llegar
+            lista = "\n".join(f"☐ {r}" for r in reqs)
+            hablado = (f"{ans.get('procedimiento', '')}. Costo: {ans.get('costo', '')}. "
+                       f"Plazo: {ans.get('plazo', '')}. Lleva: {'; '.join(reqs)}. "
+                       f"Dónde: {ans.get('donde', '')}. {ans.get('consejo', '')}")
+            boton_escuchar(hablado)
+            wa_txt = (f"*{ans.get('procedimiento', '')}* ({m['corto']})\n"
+                      f"💰 Costo: {ans.get('costo', '')}\n⏱️ Plazo: {ans.get('plazo', '')}\n"
+                      f"📍 Dónde: {ans.get('donde', '')}\n📋 Lleva:\n{lista}\n"
+                      f"Fuente: TUPA, págs. {ans.get('pagina_tupa', '')}\nConsultado en Wayki: {APP_URL}")
+            wa = "https://wa.me/?text=" + urllib.parse.quote(wa_txt)
+            mapa = "https://www.google.com/maps/search/?api=1&query=" + urllib.parse.quote(
+                f"{m['nombre']}, Huancayo, Junín, Perú")
+            st.markdown(f"""<div class="acciones">
+                <a class="wa" href="{e(wa)}" target="_blank">📲 Enviar por WhatsApp</a>
+                <a href="{e(mapa)}" target="_blank">🗺️ Cómo llegar</a></div>""", unsafe_allow_html=True)
+
+            # ---- ¿te sirvió? (métrica para la municipalidad)
+            st.markdown('<div class="etiqueta">¿Te sirvió esta respuesta?</div>', unsafe_allow_html=True)
+            clave_fb = f"fb_{slug}_{hash(pregunta)}"
+            voto = st.feedback("thumbs", key=clave_fb)
+            if voto is not None and not st.session_state.get(clave_fb + "_ok"):
+                guardar_feedback(slug, pregunta, ans.get("procedimiento", ""), voto == 1)
+                st.session_state[clave_fb + "_ok"] = True
+            if st.session_state.get(clave_fb + "_ok"):
+                st.caption("¡Gracias! Tu respuesta ayuda a la municipalidad a mejorar la orientación.")
+
         if len(resultados) > 1:
             with st.expander("🔎 Otros trámites parecidos"):
                 for r in resultados[1:]:
@@ -233,6 +322,10 @@ with st.expander("🔍 Transparencia: datos y lo que leyó la IA"):
         for r in resultados:
             with st.expander(f"{r.score:.2f} · {r.proc['nombre'][:80]} (pág. {r.proc['paginas']})"):
                 st.text(r.proc["texto"][:3000])
+    fb = resumen_feedback(slug)
+    if fb:
+        st.write(f"👍 Utilidad en esta sesión del servidor: {fb[1]} de {fb[0]} votos útiles "
+                 f"({100 * fb[1] // fb[0]} %)")
     if ans and "_tokens" in ans:
         st.json(ans["_tokens"])
 

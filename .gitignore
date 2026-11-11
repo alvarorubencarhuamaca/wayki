@@ -7,3 +7,4 @@ venv/
 *.pdf
 .ipynb_checkpoints/
 .DS_Store
+feedback_log.csv
