@@ -9,7 +9,7 @@
 
 | | |
 |---|---|
-| **Demo** | `URL_DE_STREAMLIT_AQUI` (o `streamlit run app.py`) |
+| **Demo** | **[https://qthbrgdhnhjyhp7pywtvgz.streamlit.app/](https://qthbrgdhnhjyhp7pywtvgz.streamlit.app/)** (o `streamlit run app.py`) |
 | **Datos** | TUPA Huayucachi, [Ordenanza Municipal N° 005-2022-CM/MDCHI](https://drive.google.com/file/d/1oYUDl-Vtx1KLbppotWYfYg5IYguCytQE/view) ([Portal de Transparencia](https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=11095&id_tema=5)) · TUPA 2021 El Tambo ([Portal de Transparencia](https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=11090&id_tema=5)) |
 | **Herramientas del curso** | LLM + RAG + structured outputs (sesión 08) · Whisper (sesión 13) · *bonus:* Document AI / OCR (sesión 10) |
 
@@ -65,7 +65,7 @@
 
 ## 6. Demo
 
-**URL:** `URL_DE_STREAMLIT_AQUI`
+**URL:** [https://qthbrgdhnhjyhp7pywtvgz.streamlit.app/](https://qthbrgdhnhjyhp7pywtvgz.streamlit.app/)
 
 **Correr en local:**
 ```bash
