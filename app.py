@@ -277,8 +277,8 @@ if pregunta:
                        f"Dónde: {ans.get('donde', '')}. {ans.get('consejo', '')}")
             boton_escuchar(hablado)
             wa_txt = (f"*{ans.get('procedimiento', '')}* ({m['corto']})\n"
-                      f"💰 Costo: {ans.get('costo', '')}\n⏱️ Plazo: {ans.get('plazo', '')}\n"
-                      f"📍 Dónde: {ans.get('donde', '')}\n📋 Lleva:\n{lista}\n"
+                      f"• Costo: {ans.get('costo', '')}\n• Plazo: {ans.get('plazo', '')}\n"
+                      f"• Dónde: {ans.get('donde', '')}\n• Lleva:\n{lista}\n"
                       f"Fuente: TUPA, págs. {ans.get('pagina_tupa', '')}\nConsultado en Wayki: {APP_URL}")
             wa = "https://wa.me/?text=" + urllib.parse.quote(wa_txt)
             mapa = "https://www.google.com/maps/search/?api=1&query=" + urllib.parse.quote(
