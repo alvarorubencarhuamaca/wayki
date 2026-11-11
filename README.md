@@ -5,19 +5,31 @@
 *Wayki* (*wayqi*, "hermano" en quechua) es un asistente que lee el **TUPA oficial de cada municipalidad** y responde en lenguaje simple, por texto o por voz, citando la página exacta.
 
 - **Piloto: Municipalidad Distrital de Huayucachi** (Huancayo, Junín). Su TUPA es un PDF **escaneado de 404 páginas** colgado en un Google Drive → OCR → 23 procedimientos.
-- **Segunda municipalidad: El Tambo** (Huancayo). TUPA 2021 digital de 418 páginas → **178 procedimientos**, procesados con el **mismo parser sin cambiar una línea**. Así se ve la escalabilidad.
+- **Cobertura: 8 municipalidades de la provincia de Huancayo y 1,262 procedimientos**, es decir, **todas las que publican un TUPA vigente y legible** según nuestra [auditoría de las 28](docs/auditoria_tupa_huancayo.md). Tres son escaneos leídos con OCR (Huayucachi, Huancán, San Jerónimo de Tunán) y cinco son PDF digitales (Huancayo, El Tambo, San Agustín de Cajas, Saño, Sapallanga). Todas se procesaron con el **mismo parser**.
+
+| Municipalidad | Procedimientos | TUPA | Lectura |
+|---|---:|---|---|
+| Huayucachi (piloto) | 23 | 2023, 404 págs. | OCR |
+| Huancayo (provincial) | 283 | 2025, 605 págs. | Digital |
+| Sapallanga | 242 | OM 014-2024, 545 págs. | Digital |
+| El Tambo | 178 | 2021, 418 págs. | Digital |
+| San Agustín de Cajas | 168 | 2022, 402 págs. | Digital |
+| Saño | 164 | OM 023-2019 y modif., 452 págs. | Digital |
+| San Jerónimo de Tunán | 110 | 2023, 275 págs. | OCR |
+| Huancán | 94 | 2023, 272 págs. | OCR |
+| **Total** | **1,262** | | |
 
 | | |
 |---|---|
 | **Demo** | **[https://qthbrgdhnhjyhp7pywtvgz.streamlit.app/](https://qthbrgdhnhjyhp7pywtvgz.streamlit.app/)** (o `streamlit run app.py`) |
-| **Datos** | TUPA Huayucachi, [Ordenanza Municipal N° 005-2022-CM/MDCHI](https://drive.google.com/file/d/1oYUDl-Vtx1KLbppotWYfYg5IYguCytQE/view) ([Portal de Transparencia](https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=11095&id_tema=5)) · TUPA 2021 El Tambo ([Portal de Transparencia](https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=11090&id_tema=5)) |
+| **Datos** | TUPA oficiales de 8 municipalidades, enlazados desde el Portal de Transparencia (fuente, norma y enlace de cada una en [`data/municipios.json`](data/municipios.json)) |
 | **Herramientas del curso** | LLM + RAG + structured outputs (sesión 08) · Whisper (sesión 13) · *bonus:* Document AI / OCR (sesión 10) |
 
 ---
 
 ## 1. One-liner
 
-**Hacemos** que los vecinos resuelvan su trámite municipal a la primera visita **para** municipalidades distritales del Perú (piloto en Huayucachi, ya funcionando también en El Tambo) **mediante** OCR de su TUPA escaneado, búsqueda semántica + LLM que responde en JSON verificable, y preguntas por voz con Whisper.
+**Hacemos** que los vecinos resuelvan su trámite municipal a la primera visita **para** municipalidades distritales del Perú (piloto en Huayucachi; ya cubre 8 municipalidades de la provincia de Huancayo) **mediante** OCR de su TUPA escaneado, búsqueda semántica + LLM que responde en JSON verificable, y preguntas por voz con Whisper.
 
 ## 2. Founder
 
@@ -58,7 +70,7 @@ Solo **4 de 28** tienen un TUPA vigente, accesible y en texto digital. En Viques
 ## 4. Solución e insight
 
 1. **OCR** de las 404 páginas (o `pdftotext` si el PDF es digital) → texto por página ([`data/huayucachi_paginas/`](data/huayucachi_paginas/), [`data/el-tambo_paginas/`](data/el-tambo_paginas/)).
-2. **Parser** que detecta cada ficha SUT ("Denominación del Procedimiento…") y extrae código, requisitos, costo, plazo, calificación y oficina → [`data/municipios/`](data/municipios/) (Huayucachi: 23 procedimientos; El Tambo: 178).
+2. **Parser** que detecta cada ficha SUT ("Denominación del Procedimiento…") y extrae código, requisitos, costo, plazo, calificación y oficina → [`data/municipios/`](data/municipios/) (1,262 procedimientos de 8 municipalidades).
 3. **Recuperación** TF-IDF con un diccionario de *palabras de vecino → palabras del TUPA* ("defensa civil" → "inspección técnica de seguridad en edificaciones", "cerrar mi negocio" → "cese de actividades").
 4. **LLM** que responde **solo** con los fragmentos recuperados y devuelve **JSON estructurado** (requisitos, costo, plazo, dónde, consejo, página). La app lo pinta como checklist.
 5. **Voz:** el vecino graba su pregunta y **Whisper** la transcribe.
@@ -136,7 +148,7 @@ flowchart LR
 - **Quién paga:** la **municipalidad** (B2G). El vecino usa Wayki gratis. Argumento de compra: menos colas y consultas repetidas en mesa de partes, mejor cumplimiento de transparencia, y un canal más para el vecino.
 - **Precio:** **S/ 290 al mes por municipalidad distrital** (incluye digitalizar su TUPA y actualizarlo cuando cambie). Implementación inicial: S/ 900 una vez.
 - **Huayucachi:** piloto **gratuito** (para validar y evitar cualquier conflicto de interés). Los clientes que pagan son otras municipalidades.
-- **Escalabilidad:** todas las municipalidades están obligadas a tener TUPA, y los procedimientos estandarizados (licencia de funcionamiento, ITSE, acceso a la información) son iguales en todas. Agregar El Tambo no requirió cambiar código. Primer mercado: las 28 municipalidades de la provincia de Huancayo, donde 15 ni siquiera publican su TUPA (ver auditoría); luego Junín; luego el país (~1,890 municipalidades).
+- **Escalabilidad:** todas las municipalidades están obligadas a tener TUPA, y los procedimientos estandarizados (licencia de funcionamiento, ITSE, acceso a la información) son iguales en todas. Pasar de 1 a 8 municipalidades no requirió cambiar el código del parser, solo hacerlo más tolerante a errores de OCR. Primer mercado: las 28 municipalidades de la provincia de Huancayo, donde 15 ni siquiera publican su TUPA (ver auditoría); luego Junín; luego el país (~1,890 municipalidades).
 - **Costo por usuario** (estimado con precios publicados en [groq.com/pricing](https://groq.com/pricing), verificar):
   - Consulta de texto ≈ 3,000 tokens de entrada + 400 de salida → ≈ **US$ 0.002** (≈ S/ 0.008).
   - Consulta por voz: + ~15 s de Whisper turbo → ≈ US$ 0.0002 adicional.
@@ -169,6 +181,8 @@ Lo que hice yo: elegir el problema, hablar con los usuarios, verificar montos y 
 
 - **Huayucachi:** indexa los 23 procedimientos del TUPA 2023 (licencias de funcionamiento, ITSE, espectáculos, acceso a la información). El TUPA base de 2020 (Ordenanza 004-2020-CM/MDCHI: registro civil, obras, etc.) no está publicado en línea → **siguiente paso: pedirlo a la municipalidad y pasarlo por el mismo pipeline.**
 - **El Tambo:** es el TUPA 2021 publicado en el portal. Si hay una versión más reciente, se reemplaza el PDF y se corre el pipeline otra vez.
+- **Calidad del OCR:** en Huancán y San Jerónimo de Tunán el escaneo tiene sellos y manchas, así que algunos montos o plazos no se leen bien. La app lo advierte y siempre cita la página para verificar.
+- **Pendientes de la provincia:** Pilcomayo (TUPA 2019 en formato de tabla antiguo, necesita otro lector), Hualhuas (el PDF publicado remite a un Google Drive) y Sicaya (TUPA de 2011, desactualizado). Las otras 17 no publican un TUPA utilizable.
 - **Formatos:** el parser espera fichas en formato SUT. Los TUPA antiguos en tablas necesitarán un parser adicional (o que el LLM lea el texto crudo).
 - El OCR puede leer mal algún monto: cada respuesta cita la página para verificarla. Wayki **orienta**; no reemplaza la atención oficial.
 - Roadmap: canal de WhatsApp, respuesta en audio (TTS), quechua, y un panel para que la municipalidad vea qué preguntan los vecinos.

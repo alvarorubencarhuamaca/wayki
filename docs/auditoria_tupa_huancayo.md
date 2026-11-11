@@ -31,5 +31,8 @@
 - El formato (texto o escaneo) se estimó a partir del contenido del PDF; "no determinado" significa que no se pudo concluir.
 - Los archivos finales en Google Drive (Hualhuas) no se abrieron.
 
+## Cobertura de Wayki
+Wayki ya integra **las 8 municipalidades con TUPA vigente y legible**: Huancayo, El Tambo, San Agustín de Cajas, Saño, Sapallanga (digitales) y Huayucachi, Huancán, San Jerónimo de Tunán (escaneadas, con OCR). Quedan pendientes Pilcomayo (formato de tabla antiguo) y Hualhuas (archivo final en Drive). Sicaya no se incluye por tener un TUPA de 2011.
+
 ## Qué implica para Wayki
 El problema no es solo de Huayucachi: en la provincia, **la mayoría de vecinos no puede consultar el TUPA de su municipalidad por internet**. Wayki puede funcionar con cualquier TUPA, escaneado o digital; el servicio a la municipalidad incluye **digitalizarlo y mantenerlo actualizado**, que es justo lo que pidió el encargado de modernización entrevistado.

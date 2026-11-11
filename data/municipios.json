@@ -10,7 +10,12 @@
   "paginas_txt": "data/huayucachi_paginas",
   "pag_ini": 9,
   "pag_fin": 104,
-  "correcciones": {"38–41": {"plazo": "7 días hábiles", "costo": "S/ 971.10"}}
+  "correcciones": {
+   "38–41": {
+    "plazo": "7 días hábiles",
+    "costo": "S/ 971.10"
+   }
+  }
  },
  "el-tambo": {
   "nombre": "Municipalidad Distrital de El Tambo",
@@ -23,6 +28,84 @@
   "paginas_txt": "data/el-tambo_paginas",
   "pag_ini": 1,
   "pag_fin": 418,
+  "correcciones": {}
+ },
+ "huancayo": {
+  "nombre": "Municipalidad Provincial de Huancayo",
+  "corto": "Huancayo (provincial)",
+  "fuente": "TUPA 2025 (PDF digital, 605 págs.)",
+  "norma": "Ordenanza Municipal N° 790-MPH/CM",
+  "url": "https://cdn.www.gob.pe/uploads/document/file/8019739/1050892-texto-unico-de-procedimientos-administrativos-tupa-2025.pdf",
+  "portal": "https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=1190&id_tema=5",
+  "extraccion": "Texto digital (pdftotext), sin OCR",
+  "paginas_txt": "data/huancayo_paginas",
+  "pag_ini": 19,
+  "pag_fin": 573,
+  "correcciones": {}
+ },
+ "san-agustin-de-cajas": {
+  "nombre": "Municipalidad Distrital de San Agustín de Cajas",
+  "corto": "San Agustín de Cajas",
+  "fuente": "TUPA (PDF digital, 402 págs.; publicado 14/02/2022)",
+  "norma": "TUPA publicado en la web municipal",
+  "url": "https://www.munisanagustin.gob.pe/sites/default/files/TUPA_CAJAS_PORTAL.pdf",
+  "portal": "https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=11102&id_tema=5",
+  "extraccion": "Texto digital (pdftotext), sin OCR",
+  "paginas_txt": "data/san-agustin-de-cajas_paginas",
+  "pag_ini": 11,
+  "pag_fin": 350,
+  "correcciones": {}
+ },
+ "sano": {
+  "nombre": "Municipalidad Distrital de Saño",
+  "corto": "Saño",
+  "fuente": "TUPA (PDF digital, 452 págs.)",
+  "norma": "Ordenanza Municipal N° 023-2019-CM/MDS y modificatorias",
+  "url": "https://cdn.www.gob.pe/uploads/document/file/5164701/Texto%20%C3%9Anico%20de%20Procedimientos%20Administrativos%20%28TUPA%29.pdf",
+  "portal": "https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=11104&id_tema=5",
+  "extraccion": "Texto digital (pdftotext), sin OCR",
+  "paginas_txt": "data/sano_paginas",
+  "pag_ini": 13,
+  "pag_fin": 365,
+  "correcciones": {}
+ },
+ "sapallanga": {
+  "nombre": "Municipalidad Distrital de Sapallanga",
+  "corto": "Sapallanga",
+  "fuente": "TUPA (PDF digital, 545 págs.)",
+  "norma": "Ordenanza Municipal N° 014-2024-CM/MDS (ratificada dic. 2025)",
+  "url": "https://cdn.www.gob.pe/uploads/document/file/4667061/4300747-texto-unico-de-procedimientos-administrativos-tupa-de-la-municipalidad-distrital-de-sapallanga.pdf",
+  "portal": "https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=11105&id_tema=5",
+  "extraccion": "Texto digital (pdftotext), sin OCR",
+  "paginas_txt": "data/sapallanga_paginas",
+  "pag_ini": 17,
+  "pag_fin": 485,
+  "correcciones": {}
+ },
+ "huancan": {
+  "nombre": "Municipalidad Distrital de Huancán",
+  "corto": "Huancán",
+  "fuente": "TUPA 2023 (PDF escaneado, 272 págs.)",
+  "norma": "Decreto de Alcaldía N° 002-2023-MDH/A",
+  "url": "https://cdn.www.gob.pe/uploads/document/file/5211746/TEXTO%20%C3%9ANICO%20DE%20PROCEDIMIENTOS%20ADMINISTRATIVOS_%28TUPA%29-comprimido.pdf",
+  "portal": "https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=11093&id_tema=5",
+  "extraccion": "OCR Tesseract 5 (spa), 250 dpi",
+  "paginas_txt": "data/huancan_paginas",
+  "pag_ini": 12,
+  "pag_fin": 239,
+  "correcciones": {}
+ },
+ "san-jeronimo-de-tunan": {
+  "nombre": "Municipalidad Distrital de San Jerónimo de Tunán",
+  "corto": "San Jerónimo de Tunán",
+  "fuente": "TUPA (PDF escaneado, 275 págs.; publicado 2023)",
+  "norma": "TUPA publicado en gob.pe",
+  "url": "https://cdn.www.gob.pe/uploads/document/file/4502483/TUPA_MDSJT.pdf",
+  "portal": "https://www.transparencia.gob.pe/enlaces/pte_transparencia_enlaces.aspx?id_entidad=11103&id_tema=5",
+  "extraccion": "OCR Tesseract 5 (spa), 150 dpi",
+  "paginas_txt": "data/san-jeronimo-de-tunan_paginas",
+  "pag_ini": 11,
+  "pag_fin": 253,
   "correcciones": {}
  }
 }

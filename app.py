@@ -116,6 +116,9 @@ st.markdown(f"""
 slug = st.selectbox("📍 Tu municipalidad", list(MUNIS), format_func=lambda s: MUNIS[s])
 buscador = cargar(slug)
 m = buscador.meta
+if m.get("extraccion", "").startswith("OCR"):
+    st.caption("🟡 El TUPA de esta municipalidad es un PDF escaneado: Wayki lo lee con OCR y puede haber "
+               "errores de lectura. Verifica los montos en la página citada.")
 
 # ---------------------------------------------------------------- pregunta
 EJEMPLOS = [

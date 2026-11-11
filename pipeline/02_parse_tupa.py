@@ -20,7 +20,9 @@ CFG = json.loads((ROOT / "data" / "municipios.json").read_text(encoding="utf-8")
 SRC = ROOT / CFG["paginas_txt"]
 OUT = ROOT / "data" / "municipios" / f"{SLUG}.json"
 
-INICIO = re.compile(r"Denominaci[oó]n del (Procedimiento|Servicio)", re.I)
+# tolerante al OCR: "Denominación", "minación", "inación"; "del", "ciel", "dei"…
+INICIO_TXT = r"\w*na[ci]{1,2}[oó]n +(?:de[l1i]|ciel|dei|det) +(?:Procedimiento|Servicio)"
+INICIO = re.compile(INICIO_TXT, re.I)
 # basura típica del OCR en los márgenes (sellos, numeración de folios)
 RUIDO = re.compile(r"^[\W\d_]{0,6}(?=\S)")
 
@@ -89,9 +91,9 @@ def parse(b):
     lineas = [l for l in lineas if len(l) > 2 and not l.startswith("Texto Único de Procedimientos")]
     t = "\n".join(lineas)
 
-    nombre = entre(t, r"Denominaci[oó]n del (?:Procedimiento|Servicio)[^\n]*\n", r"\n[^\n]{0,6}(?:C[oóa]digo|\|?\s*Descripci)")
-    q = re.search(r"[\"“”]", nombre)  # el nombre va entre comillas: corta la basura previa
-    if q:
+    nombre = entre(t, INICIO_TXT + r"[^\n]*\n", r"\n[^\n]{0,6}(?:C[oóaá][dg]igo|\|?\s*\w{0,2}scripci)")
+    q = re.search(r"[\"“”']", nombre)  # el nombre va entre comillas: corta la basura previa
+    if q and q.start() < 15:
         nombre = nombre[q.start():]
     nombre = re.sub(r"\n[^A-Za-zÁÉÍÓÚÑ(]{0,6}", " ", nombre)
     nombre = re.sub(r"\s+", " ", nombre).strip(" \"“”'|")
@@ -124,7 +126,8 @@ def parse(b):
         "descripcion": limpio(desc),
         "requisitos": requisitos[:12],
         "costo": costo,
-        "plazo": f"{plazo.group(1)} días hábiles" if plazo else ("Inmediato (aprobación automática)" if calif and "autom" in calif.group(1).lower() else ""),
+        "plazo": ({"0": "Mismo día (0 días hábiles)", "1": "1 día hábil"}.get(plazo.group(1).lstrip("0") or "0",
+                  f"{plazo.group(1)} días hábiles") if plazo else ("Inmediato (aprobación automática)" if calif and "autom" in calif.group(1).lower() else "")),
         "calificacion": calif.group(1) if calif else "",
         "donde": donde,
         "responsable": limpio(responsable),
