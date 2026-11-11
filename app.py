@@ -24,8 +24,9 @@ st.markdown("""
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 :root{--rojo:#B83227;--rojo-osc:#8E241C;--crema:#FBF7F2;--arena:#F3ECE3;--carbon:#2B2B2B;--gris:#6B6B6B;--verde:#2E7D4F;}
 html, body, [class*="css"], .stMarkdown, .stButton button, input, textarea {font-family:'Inter',system-ui,sans-serif !important;}
-.block-container{padding-top:1.2rem;max-width:760px;}
-#MainMenu, footer, header [data-testid="stToolbar"]{visibility:hidden;}
+.block-container{padding-top:1.4rem;max-width:760px;}
+#MainMenu, footer{visibility:hidden;}
+header[data-testid="stHeader"]{display:none;}  /* la barra superior tapaba el interruptor de letra grande */
 
 .hero{background:linear-gradient(135deg,var(--rojo) 0%,var(--rojo-osc) 100%);color:#fff;border-radius:22px;
       padding:26px 26px 22px;margin-bottom:14px;box-shadow:0 10px 30px rgba(184,50,39,.25);}
@@ -86,7 +87,7 @@ e = html.escape  # todo texto del TUPA o del LLM pasa por aquí antes de ir al H
 APP_URL = "https://qthbrgdhnhjyhp7pywtvgz.streamlit.app/"
 FEEDBACK = Path(__file__).parent / "feedback_log.csv"  # efímero en Streamlit Cloud (se borra al reiniciar)
 
-_c1, _c2 = st.columns([3, 1])
+_c1, _c2 = st.columns([2, 1])
 if _c2.toggle("🔠 Letra grande", key="letra_grande"):
     st.markdown("<style>.block-container{zoom:1.18}</style>", unsafe_allow_html=True)
 
